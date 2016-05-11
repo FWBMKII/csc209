@@ -1,0 +1,92 @@
+Script started on Fri Mar 21 16:49:09 2014
+]0;g3yangyl@b2210-23:~/209exercise/e7b2210-23:~/209exercise/e7$ gdb randclient
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /h/u12/g4/00/g3yangyl/209exercise/e7/randclient...done.
+(gdb) bream k main
+Breakpoint 1 at 0x4008ac: file randclient.c, line 16.
+(gdb) run localhost
+Starting program: /h/u12/g4/00/g3yangyl/209exercise/e7/randclient localhost
+
+Breakpoint 1, main (argc=2, argv=0x7fffffffe6b8) at randclient.c:16
+16	int main(int argc, char* argv[]) {
+(gdb) run localhost(gdb) [Kstep
+19	  char message[18] = "A stitch in time\r\n";
+(gdb) n
+27	  sprintf (port, "%d", PORT);
+(gdb) n
+29	  memset (&hints, 0, sizeof (struct addrinfo));
+(gdb) n
+30	  hints.ai_family = AF_INET;
+(gdb) n
+31	  hints.ai_socktype = SOCK_STREAM;
+(gdb) n
+33	  if ( argc != 2) {
+(gdb) n
+37	  if ((err = getaddrinfo(argv[1], port, &hints, &info))) {
+(gdb) n
+41	  peer = *(struct sockaddr_in *)(info->ai_addr);
+(gdb) n
+43	  if ((soc = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+(gdb) n
+48	  if (connect(soc, (struct sockaddr *)&peer, sizeof(peer)) == -1) {
+(gdb) n
+53	  total_bytes = TIMES * sizeof(message);
+(gdb) n
+54	  current_byte = 0;
+(gdb) n
+55	  while (current_byte < total_bytes) {
+(gdb) n
+56	    howmany = random() % (MAXCHARS - MINCHARS + 1) + MINCHARS;
+(gdb) n
+57	    bytes_left = total_bytes - current_byte;
+(gdb) n
+58	    if (howmany > bytes_left)
+(gdb) n
+60	    for (i = 0; i < howmany; i++)
+(gdb) n
+61	      piece[i] = message[(current_byte + i) % sizeof(message)];
+(gdb) n
+60	    for (i = 0; i < howmany; i++)
+(gdb) n
+61	      piece[i] = message[(current_byte + i) % sizeof(message)];
+(gdb) n
+60	    for (i = 0; i < howmany; i++)
+(gdb) n
+61	      piece[i] = message[(current_byte + i) % sizeof(message)];
+(gdb) n
+60	    for (i = 0; i < howmany; i++)
+(gdb) n
+61	      piece[i] = message[(current_byte + i) % sizeof(message)];
+(gdb) n
+60	    for (i = 0; i < howmany; i++)
+(gdb) n
+61	      piece[i] = message[(current_byte + i) % sizeof(message)];
+(gdb) n
+60	    for (i = 0; i < howmany; i++)
+(gdb) n
+61	      piece[i] = message[(current_byte + i) % sizeof(message)];
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 3057] will be killed.
+
+Quit anyway? (y or n) n
+Not confirmed.
+(gdb) qnq[Kq
+A debugging session is active.
+
+	Inferior 1 [process 3057] will be killed.
+
+Quit anyway? (y or n) y
+]0;g3yangyl@b2210-23:~/209exercise/e7b2210-23:~/209exercise/e7$ exit
+exit
+
+Script done on Fri Mar 21 16:52:02 2014

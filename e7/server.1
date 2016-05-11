@@ -1,0 +1,112 @@
+Script started on Fri Mar 21 16:40:46 2014
+]0;g3yangyl@b2210-23:~/209exercise/e7b2210-23:~/209exercise/e7$ gdb bufserver
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /h/u12/g4/00/g3yangyl/209exercise/e7/bufserver...done.
+(gdb) break main
+Breakpoint 1 at 0x400a94: file bufserver.c, line 63.
+(gdb) n
+The program is not being run.
+(gdb) r
+Starting program: /h/u12/g4/00/g3yangyl/209exercise/e7/bufserver 
+
+Breakpoint 1, main () at bufserver.c:63
+63	int main(void) {
+(gdb) n
+75	  listenfd = setup();
+(gdb) nn 
+Listening on 30001
+77	    socklen = sizeof(peer);
+(gdb) n
+78	    if ((fd = accept(listenfd, (struct sockaddr *)&peer, &socklen)) < 0) {
+(gdb) n
+n
+n
+n
+n
+
+
+stop
+^C
+Program received signal SIGINT, Interrupt.
+0x00007ffff7b0f190 in __accept_nocancel () at ../sysdeps/unix/syscall-template.S:82
+82	../sysdeps/unix/syscall-template.S: No such file or directory.
+(gdb) r
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /h/u12/g4/00/g3yangyl/209exercise/e7/bufserver 
+
+Breakpoint 1, main () at bufserver.c:63
+63	int main(void) {
+(gdb) n
+75	  listenfd = setup();
+(gdb) n
+Listening on 30001
+77	    socklen = sizeof(peer);
+(gdb) n
+78	    if ((fd = accept(listenfd, (struct sockaddr *)&peer, &socklen)) < 0) {
+(gdb) n
+82	      printf("New connection on port %d\n", ntohs(peer.sin_port));
+(gdb) n
+New connection on port 52707
+85	      inbuf = 0;          // buffer is empty; has no bytes
+(gdb) n step
+86	      room = sizeof(buf); // room == capacity of the whole buffer
+(gdb) s ste   stea p
+87	      after = buf;        // start writing at beginning of buf
+(gdb) step
+89	      while ((nbytes = read(fd, after, room)) > 0) {
+(gdb) step
+read () at ../sysdeps/unix/syscall-template.S:82
+82	../sysdeps/unix/syscall-template.S: No such file or directory.
+(gdb) step
+main () at bufserver.c:91
+91	        inbuf += nbytes;
+(gdb) step
+96	        where = find_network_newline(buf, inbuf);
+(gdb) step
+find_network_newline (buf=0x7fffffffe570 "A stitch in time\r\nA stitch in ", inbuf=30) at bufserver.c:55
+55		for (i = 0; i < inbuf; i++){
+(gdb) step
+56			if (buf[i] == '\r'){
+(gdb) step
+55		for (i = 0; i < inbuf; i++){
+(gdb) step
+56			if (buf[i] == '\r'){
+(gdb) step
+55		for (i = 0; i < inbuf; i++){
+(gdb) step
+56			if (buf[i] == '\r'){
+(gdb) step
+55		for (i = 0; i < inbuf; i++){
+(gdb) step
+56			if (buf[i] == '\r'){
+(gdb) step
+55		for (i = 0; i < inbuf; i++){
+(gdb) step
+56			if (buf[i] == '\r'){
+(gdb) step
+55		for (i = 0; i < inbuf; i++){
+(gdb) step
+56			if (buf[i] == '\r'){
+(gdb) n
+55		for (i = 0; i < inbuf; i++){
+(gdb) exit
+Undefined command: "exit".  Try "help".
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 2765] will be killed.
+
+Quit anyway? (y or n) n y
+]0;g3yangyl@b2210-23:~/209exercise/e7b2210-23:~/209exercise/e7$ exit
+exit
+
+Script done on Fri Mar 21 16:47:14 2014

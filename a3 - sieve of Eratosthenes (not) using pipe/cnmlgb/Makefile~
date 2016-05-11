@@ -1,0 +1,7 @@
+
+all : pfact nmb
+
+pfact : pfact.c
+	gcc -Wall -g -o pfact pfact.c -lm
+
+

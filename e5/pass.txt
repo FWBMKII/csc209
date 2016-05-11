@@ -1,0 +1,6 @@
+fish:swim
+birds:fly
+lizards:crawl
+humans:walk
+tarantulas:spin
+hippopotamuses:swim

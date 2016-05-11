@@ -1,0 +1,50 @@
+
+/* Functions and type declarations for the CRC code */
+#define XMODEM_KEY 0x1021
+
+unsigned short	crc_message(unsigned int key, unsigned char *message, int num_bytes);
+
+
+/* Function and type declarations for packets */
+
+#define MAXSIZE 256
+struct packet {
+	unsigned short	block_num;
+	unsigned short	block_size;
+	unsigned short	crc;
+	unsigned char  *payload;
+};
+
+/* Packet function declarations */
+struct list *pcreate_node(FILE *infp, FILE *outfp, int bn);
+
+
+
+/* Function and type declaration for list of packets */
+
+struct list {
+    struct packet p;
+    struct list *next;
+};
+
+/* List function declarations */
+
+struct list *create_node(FILE *infp);
+int sort_node(struct list *l);
+int exchange_node(struct list *i, struct list *j);
+
+/* Log messages */
+
+#define INSERTED 0
+#define CRC_MATCH 1
+#define CRC_NO_MATCH 2
+#define DUPLICATE 3
+
+/*
+ * logfp is a global variable because it is used inside other functions. We
+ * could pass it in as a parameter to the functions that call log_message but
+ * since it is nice to see the logging happen in the background, it seems
+ * reasonable to make the file pointer a global variable.
+ */
+extern FILE    *logfp;
+void		log_message(struct packet *p, int message_no, FILE * logfp);

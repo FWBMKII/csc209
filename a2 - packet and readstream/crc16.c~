@@ -1,0 +1,81 @@
+#include <string.h>
+#include <stdio.h>
+
+#include "data.h"
+
+// based on code from:
+// http://stackoverflow.com/questions/111928/is-there-a-printf-converter-to-print-in-binary-format?rq=1
+
+const char *to_binary(int x) {
+    static char bits[17];
+    bits[0] = '\0';
+    int z;
+    for (z = 1 << 15; z > 0; z >>= 1) {
+        strcat(bits, ((x & z) == z) ? "1" : "0");
+    }
+    return bits;
+}
+
+
+/*  
+  Process one bit of the message.
+  reg: register (modified by this function)
+  key: CRC16 key being used
+  next_bit: next bit of message
+*/
+
+void crc_bit(unsigned short *reg, unsigned int key, unsigned int next_bit) {
+    if (*reg & (1 << 15) ==0){
+        *reg = (*reg << 1) | (next_bit);
+    }
+    else {
+        *reg = (*reg << 1) | (next_bit);
+        *reg ^= key;
+    }
+}
+  
+/*
+  Process one byte of the message.
+  reg: register (modified by this function)
+  key: CRC16 key being used
+  next_byte: next byte of message
+*/
+
+void crc_byte(unsigned short *reg, unsigned int key, unsigned int next_byte) {
+    unsigned int next;
+    for (i = 0, i <= 7, i++){
+        next = (0x10000000 >> i);
+        crc_bit(*reg, key, (next_byte & next));
+        }
+    }
+}
+
+/*
+  Process an entire message using CRC16 and return the CRC.
+  key: CRC16 key being used
+  message: message for which we are calculating the CRC.
+  num_bytes: size of the message in bytes.
+*/
+
+unsigned short crc_message(unsigned int key,  unsigned char *message, int num_bytes) {
+    unsigned short *reg = 0x0000;
+    unsigned int next;
+    
+    for (i = 0, i < (num_bytes), i++){
+        next = (0x11111111 & (((unsigned char) *message) >> (i * 8)));
+        crc_byte(*reg, key, next);
+    }
+    
+    return *reg;
+}
+
+
+/*testing code*/
+/*
+int main(void) {
+  unsigned short crc16 = crc_message(XMODEM_KEY, "d", 1);
+  printf("%s\n", to_binary(crc16));
+  return 0;
+}
+*/
+
